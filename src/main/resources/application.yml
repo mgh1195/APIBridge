@@ -1,10 +1,15 @@
 spring:
-    application:
-        name: APIBridge
-    cache:
-        type: redis
+  application:
+    name: APIBridge
+  cache:
+    type: redis
 
-    data:
-        redis:
-            host: ${REDIS_ADDR:localhost}
-            port: ${REDIS_PORT:6379}
+  data:
+    redis:
+      host: ${REDIS_ADDR:localhost}
+      port: ${REDIS_PORT:6379}
+
+app:
+  google:
+    apiKey: ""
+    baseUrl: "https://www.googleapis.com/books/v1/"
