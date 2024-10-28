@@ -1,0 +1,10 @@
+spring:
+    application:
+        name: APIBridge
+    cache:
+        type: redis
+
+    data:
+        redis:
+            host: ${REDIS_ADDR:localhost}
+            port: ${REDIS_PORT:6379}

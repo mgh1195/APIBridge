@@ -1,5 +1,7 @@
 package com.wrapper.apibridge.api.dto
 
+import java.io.Serializable
+
 class BookItem(
     val kind: String,
     val id: String,
@@ -9,8 +11,7 @@ class BookItem(
     val saleInfo: SaleInfo,
     val accessInfo: AccessInfo,
     val searchInfo: SearchInfo,
-) {
-}
+) : Serializable
 
 class VolumeInfo(
     val title: String,
@@ -33,14 +34,14 @@ class VolumeInfo(
     val previewLink: String,
     val infoLink: String,
     val canonicalVolumeLink: String,
-)
+) : Serializable
 
 class SaleInfo(
     val country: String,
     val saleability: String,
     val isEbook: Boolean,
     val buyLink: String,
-)
+) : Serializable
 
 class AccessInfo(
     val country: String,
@@ -53,39 +54,39 @@ class AccessInfo(
     val webReaderLink: String?,
     val accessViewStatus: String?,
     val quoteSharingAllowed: Boolean
-)
+) : Serializable
 
 class SearchInfo(
     val textSnippet: String,
-)
+) : Serializable
 
 class IndustryIdentifiers(
     val type: String,
     val identifier: String,
-)
+) : Serializable
 
 class ReadingModes(
     val text: Boolean,
     val image: Boolean,
-)
+) : Serializable
 
 class PanelizationSummary(
     val containsEpubBubbles: Boolean,
     val containsImageBubbles: Boolean,
-)
+) : Serializable
 
 class ImageLinks(
     val smallThumbnail: String,
     val thumbnail: String,
-)
+) : Serializable
 
 class Epub(
     val isAvailable: Boolean,
     val downloadLink: String?
 
-)
+) : Serializable
 
 class Pdf(
     val isAvailable: Boolean,
     val downloadLink: String?
-)
+) : Serializable
