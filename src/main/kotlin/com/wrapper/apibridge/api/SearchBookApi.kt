@@ -2,6 +2,7 @@ package com.wrapper.apibridge.api
 
 import com.wrapper.apibridge.api.dto.SearchBookDto
 import com.wrapper.apibridge.service.SearchBookService
+import jakarta.validation.Valid
 import org.springframework.data.domain.Pageable
 import org.springframework.data.web.PageableDefault
 import org.springframework.web.bind.annotation.PostMapping
@@ -19,8 +20,7 @@ class SearchBookApi(
     //TODO(Add metrics)
     @PostMapping
     fun search(
-        //TODO(Add validation)
-        @RequestBody dto: SearchBookDto,
+        @Valid @RequestBody dto: SearchBookDto,
         @PageableDefault(size = 5) pageable: Pageable,
     ) =
         searchBookService.searchBook(dto, pageable)
