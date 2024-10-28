@@ -39,11 +39,3 @@ class SearchBookService(
     }
 
 }
-
-@Configuration
-@ConfigurationProperties(prefix = "app.google")
-data class GoogleApiProperties(
-    var apiKey: String = "",
-    var baseUrl: String = "",
-    var maxResults: Int = 5
-)

@@ -1,8 +1,8 @@
 package com.wrapper.apibridge.configuration
 
 import com.wrapper.apibridge.api.dto.SearchBookResultDto
-import com.wrapper.apibridge.service.GoogleApiProperties
 import okhttp3.OkHttpClient
+import org.springframework.boot.context.properties.ConfigurationProperties
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import retrofit2.Call
@@ -53,3 +53,11 @@ interface GoogleSearchBook {
     ): Call<SearchBookResultDto>
 
 }
+
+@Configuration
+@ConfigurationProperties(prefix = "app.google")
+data class GoogleApiProperties(
+    var apiKey: String = "",
+    var baseUrl: String = "",
+    var maxResults: Int = 5
+)
