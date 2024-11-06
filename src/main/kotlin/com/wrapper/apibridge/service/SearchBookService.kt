@@ -4,9 +4,7 @@ import com.wrapper.apibridge.api.dto.SearchBookResultDto
 import com.wrapper.apibridge.api.dto.BookItem
 import com.wrapper.apibridge.api.dto.SearchBookDto
 import com.wrapper.apibridge.configuration.GoogleSearchBook
-import org.springframework.boot.context.properties.ConfigurationProperties
 import org.springframework.cache.annotation.Cacheable
-import org.springframework.context.annotation.Configuration
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
 
