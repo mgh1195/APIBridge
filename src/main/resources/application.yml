@@ -14,6 +14,11 @@ app:
     apiKey: ""
     baseUrl: "https://www.googleapis.com/books/v1/"
 
+  podium:
+    url: "https://api.pod.ir/srv/sc/nzh/doServiceCall"
+    token: "token"
+    tokenIssuer: "1"
+
 management:
   endpoints:
     web:
