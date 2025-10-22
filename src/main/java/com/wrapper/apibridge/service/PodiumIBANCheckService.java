@@ -2,7 +2,6 @@ package com.wrapper.apibridge.service;
 
 import com.wrapper.apibridge.dto.PodiumRequest;
 import com.wrapper.apibridge.dto.PodiumResponse;
-import jakarta.annotation.PostConstruct;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -16,9 +15,10 @@ public class PodiumIBANCheckService {
     private final String apiKey;
     private final PodiumAPIClient podiumAPIClient;
 
-    public PodiumIBANCheckService(@Value("${app.podium.services.iban.productId}") String productId,
-                                  @Value("${app.podium.services.iban.apiKey}") String apiKey,
-                                  PodiumAPIClient podiumAPIClient
+    public PodiumIBANCheckService(
+            @Value("${app.podium.services.iban.productId}") String productId,
+            @Value("${app.podium.services.iban.apiKey}") String apiKey,
+            PodiumAPIClient podiumAPIClient
     ) {
         this.productId = productId;
         this.apiKey = apiKey;
@@ -45,10 +45,5 @@ public class PodiumIBANCheckService {
         request.setScApiKey(apiKey);
 
         return podiumAPIClient.callService(request);
-    }
-
-    @PostConstruct
-    public void init() {
-        System.out.println(check("11", "ssss"));
     }
 }
