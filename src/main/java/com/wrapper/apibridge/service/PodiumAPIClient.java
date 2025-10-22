@@ -28,7 +28,7 @@ public class PodiumAPIClient {
         this.objectMapper = objectMapper;
     }
 
-    public <T> PodiumResponse<T> callService(PodiumRequest request, TypeReference<PodiumResponse<T>> typeReference) {
+    public <T> PodiumResponse<T> callService(PodiumRequest request) {
         try {
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
@@ -46,8 +46,17 @@ public class PodiumAPIClient {
                     String.class
             );
 
-            return objectMapper.readValue(response.getBody(), typeReference);
+            PodiumResponse<T> responseEntity = objectMapper.readValue(response.getBody(), new TypeReference<>() {
+            });
 
+            if (responseEntity.getHasError()) {
+                throw new PodiumAPIException(
+                        "API call returned error. errorCode: " + responseEntity.getErrorCode() +
+                                " message: " + responseEntity.getMessage()
+                );
+            }
+
+            return responseEntity;
         } catch (HttpClientErrorException | HttpServerErrorException e) {
             throw new PodiumAPIException(
                     "API call failed with status: " + e.getStatusCode() +

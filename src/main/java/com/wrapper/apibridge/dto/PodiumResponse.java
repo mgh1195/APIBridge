@@ -6,6 +6,7 @@ import lombok.Data;
 public class PodiumResponse<T> {
     private Boolean hasError;
     private Integer messageId;
+    private String message;
     private String referenceNumber;
     private Integer errorCode;
     private Integer count;
