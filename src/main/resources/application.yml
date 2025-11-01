@@ -17,7 +17,7 @@ app:
   finnotech:
     base-url: "https://api.finnotech.ir"
     nid: ${FINNOTECH_NID}
-    scopes: "credit:cheque-color-inquiry:get"
+    scopes: "credit:cheque-color-inquiry:get,kyc:sms-shahkar-send:get,kyc:sms-shahkar-verification:get"
     client-id: ${FINNOTECH_CLIENT_ID}
     client-secret: ${FINNOTECH_CLIENT_SECRET}
 

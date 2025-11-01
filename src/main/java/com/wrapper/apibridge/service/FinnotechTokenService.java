@@ -26,7 +26,7 @@ public class FinnotechTokenService extends AbstractTokenService {
             String baseUrl,
             @Value("${app.finnotech.nid}")
             String nid,
-            @Value("${app.finnotech.scopes}")
+            @Value("#{'${app.finnotech.scopes}'.split(',')}")
             List<String> scopes,
             @Value("${app.finnotech.client-id}")
             String clientId,
