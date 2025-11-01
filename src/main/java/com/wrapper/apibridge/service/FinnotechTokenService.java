@@ -22,8 +22,8 @@ public class FinnotechTokenService extends AbstractTokenService {
     private final RestClient restClient;
 
     public FinnotechTokenService(
-            @Value("${app.finnotech.token-url}")
-            String url,
+            @Value("${app.finnotech.base-url}")
+            String baseUrl,
             @Value("${app.finnotech.nid}")
             String nid,
             @Value("${app.finnotech.scopes}")
@@ -37,7 +37,7 @@ public class FinnotechTokenService extends AbstractTokenService {
         this.scopes = scopes;
 
         this.restClient = RestClient.builder()
-                .baseUrl(url)
+                .baseUrl(baseUrl)
                 .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .defaultHeader(HttpHeaders.AUTHORIZATION, "Basic " + calculateAuth(clientId, clientSecret))
                 .build();
@@ -78,6 +78,7 @@ public class FinnotechTokenService extends AbstractTokenService {
         Long creationTime = System.currentTimeMillis();
 
         FinnotechResponse<TokenResponse> tokenResponse = restClient.post()
+                .uri("/dev/v2/oauth2/token")
                 .body(requestBody)
                 .retrieve()
                 .body(new ParameterizedTypeReference<>() {

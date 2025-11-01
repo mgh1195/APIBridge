@@ -14,6 +14,14 @@ app:
     apiKey: ""
     baseUrl: "https://www.googleapis.com/books/v1/"
 
+  finnotech:
+    base-url: "https://api.finnotech.ir"
+    nid: ${FINNOTECH_NID}
+    scopes: "credit:cheque-color-inquiry:get"
+    client-id: ${FINNOTECH_CLIENT_ID}
+    client-secret: ${FINNOTECH_CLIENT_SECRET}
+
+
 management:
   endpoints:
     web:
