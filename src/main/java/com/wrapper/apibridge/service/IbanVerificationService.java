@@ -1,6 +1,6 @@
 package com.wrapper.apibridge.service;
 
-import com.wrapper.apibridge.service.dto.ChequeColor;
+
 import com.wrapper.apibridge.service.dto.FinnotechResponse;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Value;
@@ -10,33 +10,43 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 
 @Service
-public class ChequeColorService {
+public class IbanVerificationService {
     private final FinnotechTokenService finnotechTokenService;
     private final RestClient restClient;
     private final String clientId;
 
-    public ChequeColorService(
+    public IbanVerificationService(
             FinnotechTokenService finnotechTokenService,
+            RestClient finnotechRestClient,
             @Value("${app.finnotech.client-id}")
-            String clientId,
-            RestClient finnotechRestClient
+            String clientId
     ) {
         this.finnotechTokenService = finnotechTokenService;
-        this.clientId = clientId;
         this.restClient = finnotechRestClient;
+        this.clientId = clientId;
     }
 
-    public ChequeColor check(String nationalId) {
+    public boolean verify(String nationalId, String iban) {
+        return verify(nationalId, iban, null);
+    }
+
+    public boolean verify(String nationalId, String iban, String trackId) {
         assert nationalId != null;
+        assert iban != null;
 
-        String requestUri = String.format(
-                "/credit/v2/clients/%s/chequeColorInquiry?idCode=%s",
+        StringBuilder requestUri = new StringBuilder(String.format(
+                "/kyc/v2/clients/%s/ibanOwnerVerification?nid=%s&iban=%s",
                 clientId,
-                nationalId
-        );
+                nationalId,
+                iban
+        ));
 
-        FinnotechResponse<ChequeColorResponse> response = restClient.get()
-                .uri(requestUri)
+        if (trackId != null) {
+            requestUri.append("&trackId=").append(trackId);
+        }
+
+        FinnotechResponse<IbanOwnerVerificationResponse> response = restClient.get()
+                .uri(requestUri.toString())
                 .header(HttpHeaders.AUTHORIZATION, "Bearer " + finnotechTokenService.getToken())
                 .retrieve()
                 .body(new ParameterizedTypeReference<>() {
@@ -45,11 +55,11 @@ public class ChequeColorService {
         assert response != null;
         assert response.getResult() != null;
 
-        return ChequeColor.fromValue(Integer.parseInt(response.getResult().chequeColor));
+        return "yes".equalsIgnoreCase(response.getResult().getIsValid());
     }
 
     @Data
-    private static class ChequeColorResponse {
-        private String chequeColor;
+    private static class IbanOwnerVerificationResponse {
+        private String isValid;
     }
 }

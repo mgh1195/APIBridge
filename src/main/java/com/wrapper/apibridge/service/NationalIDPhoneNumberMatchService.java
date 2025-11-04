@@ -6,7 +6,6 @@ import lombok.Data;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 
@@ -18,16 +17,12 @@ public class NationalIDPhoneNumberMatchService {
 
     public NationalIDPhoneNumberMatchService(
             FinnotechTokenService finnotechTokenService,
-            @Value("${app.finnotech.base-url}")
-            String baseUrl,
+            RestClient finnotechRestClient,
             @Value("${app.finnotech.client-id}")
             String clientId
     ) {
         this.finnotechTokenService = finnotechTokenService;
-        this.restClient = RestClient.builder()
-                .baseUrl(baseUrl)
-                .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .build();
+        this.restClient = finnotechRestClient;
         this.clientId = clientId;
     }
 

@@ -6,7 +6,7 @@ import lombok.Data;
 public class FinnotechResponse<T> {
     private T result;
     private String status;
-    private String error;
+    private FinnotechError error;
     private String trackId;
     private String responseCode;
 }
