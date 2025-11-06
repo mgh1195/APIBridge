@@ -10,12 +10,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 
 @Service
-public class ChequeColorService {
+public class ChequeColorInquiryService {
     private final FinnotechTokenService finnotechTokenService;
     private final RestClient restClient;
     private final String clientId;
 
-    public ChequeColorService(
+    public ChequeColorInquiryService(
             FinnotechTokenService finnotechTokenService,
             @Value("${app.finnotech.client-id}")
             String clientId,

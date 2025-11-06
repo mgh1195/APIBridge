@@ -3,7 +3,7 @@ package com.wrapper.apibridge.service;
 import com.wrapper.apibridge.exception.NationalIDBirthDayDoesNotMatchException;
 import com.wrapper.apibridge.service.dto.FinnotechResponse;
 import com.wrapper.apibridge.service.dto.IranianDate;
-import lombok.Data;
+import com.wrapper.apibridge.service.dto.PersonIdentity;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpHeaders;
@@ -27,29 +27,12 @@ public class IdentityInquiryService {
         this.clientId = clientId;
     }
 
-    @Data
-    public static class IdentityResponse {
-        private String firstName;
-        private String lastName;
-        private String birthDate;
-        private String fatherName;
-        private String deathStatus;
-        private String nationalId;
-        private String gender;
-        private Integer identityNo;
-        private String identitySeri;
-        private String identitySerial;
-        private String officeName;
-        private String officeCode;
-        private String trackingCode;
-        private String operationStatus;
-    }
 
-    public IdentityResponse inquiry(String nationalId, IranianDate birthDate) {
+    public PersonIdentity inquiry(String nationalId, IranianDate birthDate) {
         return inquiry(nationalId, birthDate, null);
     }
 
-    public IdentityResponse inquiry(String nationalId, IranianDate birthDate, String trackId) {
+    public PersonIdentity inquiry(String nationalId, IranianDate birthDate, String trackId) {
 
         assert nationalId != null;
         assert birthDate != null;
@@ -65,7 +48,7 @@ public class IdentityInquiryService {
             requestUri.append("&trackId=").append(trackId);
         }
 
-        FinnotechResponse<IdentityResponse> response = finnotechRestClient.get()
+        FinnotechResponse<PersonIdentity> response = finnotechRestClient.get()
                 .uri(requestUri.toString())
                 .header(HttpHeaders.AUTHORIZATION, "Bearer " + finnotechTokenService.getToken())
                 .retrieve()
@@ -75,7 +58,7 @@ public class IdentityInquiryService {
         assert response != null;
         assert response.getResult() != null;
 
-        if (response.getResult().nationalId == null) {
+        if (response.getResult().getNationalId() == null) {
             throw new NationalIDBirthDayDoesNotMatchException();
         }
 
