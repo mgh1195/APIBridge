@@ -54,11 +54,11 @@ public class NationalIDMobileVerificationService {
         assert response != null;
         assert response.getResult() != null;
 
-        return response.getResult().isValid();
+        return response.getResult().getIsValid();
     }
 
     @Data
     private static class ShahkarVerificationResponse {
-        private boolean isValid;
+        private Boolean isValid;
     }
 }
