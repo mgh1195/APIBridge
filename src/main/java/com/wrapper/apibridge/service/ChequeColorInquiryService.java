@@ -26,12 +26,19 @@ public class ChequeColorInquiryService {
         this.restClient = finnotechRestClient;
     }
 
-    public ChequeColor check(String nationalId) {
+    public ChequeColor inquiry(String nationalId) {
+        return inquiry(nationalId, false);
+    }
+
+    public ChequeColor inquiry(String nationalId, boolean legal) {
         assert nationalId != null;
 
+        String endpoint = legal ? "chequeColorInquiryLegal" : "chequeColorInquiry";
+
         String requestUri = String.format(
-                "/credit/v2/clients/%s/chequeColorInquiry?idCode=%s",
+                "/credit/v2/clients/%s/%s?idCode=%s",
                 clientId,
+                endpoint,
                 nationalId
         );
 
@@ -45,11 +52,11 @@ public class ChequeColorInquiryService {
         assert response != null;
         assert response.getResult() != null;
 
-        return ChequeColor.fromValue(Integer.parseInt(response.getResult().chequeColor));
+        return response.getResult().getChequeColor();
     }
 
     @Data
     private static class ChequeColorResponse {
-        private String chequeColor;
+        private ChequeColor chequeColor;
     }
 }

@@ -1,5 +1,7 @@
 package com.wrapper.apibridge.service.dto;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+
 public enum ChequeColor {
     WHITE(1),
     YELLOW(2),
@@ -13,9 +15,10 @@ public enum ChequeColor {
         this.value = value;
     }
 
-    public static ChequeColor fromValue(int value) {
+    @JsonCreator
+    public static ChequeColor fromString(String value) {
         for (ChequeColor chequeColor : ChequeColor.values()) {
-            if (chequeColor.value == value) {
+            if (chequeColor.value == Integer.parseInt(value)) {
                 return chequeColor;
             }
         }
